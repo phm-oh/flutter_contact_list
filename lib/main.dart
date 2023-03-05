@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contact_list/contact.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(MyApp());
@@ -361,6 +362,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // late int count = contactData.length;
    
+   Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
+
+
 
   @override
   Widget build(BuildContext context) {                          //ep1-9 ontab  --> url launcher
@@ -386,8 +396,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: const TextStyle(
                     color: Colors.brown
                   ),),
-                  trailing: const Icon(Icons.auto_stories_sharp) ,
+                  trailing: const Icon(Icons.call) ,
                   onTap: () {
+
+                    setState(() {
+                        _makePhoneCall(data.phonenumber);
+                    });
                     
                   },
                   splashColor: Colors.redAccent,
